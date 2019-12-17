@@ -1,0 +1,41 @@
+{%extends 'admin/change_form.html'%}
+
+{%block content%}
+{{block.super}}
+{%endblock%}
+
+{%block admin_change_form_document_ready%}
+    {{block.super}}
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <script>
+        var searchLocationUrl ='{%url "takelog:getfloors"%}'
+        var $ = django.jQuery
+        $(document).ready(function() {
+            $('select#id_building').on('change', function() {
+                $.ajax({
+                type: 'GET',
+                data:  {id_building:$(this).children('option:selected').val(),
+                    csrfmiddlewaretoken:$('form input[name="csrfmiddlewaretoken"]').val()},
+                url: searchLocationUrl  ,
+                dataType: 'json', 
+                success: function(data) { 
+                    // alert(data)
+                    // $("select#id_city").html(data);
+                    $("select#id_floor").empty();
+                    $("select#id_floor").append("<option value=''>------------</option>")
+                    console.log(data)
+                    $.each(data, function () {
+                        $("select#id_floor").append("<option value='"+this[0]+"'>"+this[1]+"</option>")
+                    });
+                    
+                },
+                error: function(e, x, r) { 
+                    console.log('failed to apply ajax city request')                          
+                }
+            });
+            });
+        });
+    </script>
+    <script></script> -->
+{%endblock%}
