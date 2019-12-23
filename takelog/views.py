@@ -1,9 +1,7 @@
 from django.shortcuts import render
 from .models import Building
 from django.http import JsonResponse
-# Create your views here.
-def base_view(request):
-    return render(request,'takelogiii/index.html')
+
 
 def getfloors(request):
     buil_id = request.GET.get('id_building','')
